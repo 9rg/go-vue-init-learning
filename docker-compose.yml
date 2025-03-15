@@ -1,1 +1,41 @@
-# TBD
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    networks:
+      - go-vue-init-learning_network
+
+  backend:
+    build: ./backend
+    container_name: backend
+    environment:
+      - DB_HOST=mssql
+      - DB_PORT=1433
+      - DB_USER=9rg
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=mydb
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mssql
+    networks:
+      - go-vue-init-learning_network
+
+  frontend:
+    build: ./frontend/frontend
+    container_name: frontend
+    ports:
+      - "8081:8080"
+    depends_on:
+      - backend
+    networks:
+      - go-vue-init-learning_network
+
+networks:
+  go-vue-init-learning_network:
+    driver: bridge
