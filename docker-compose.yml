@@ -16,7 +16,7 @@ services:
     environment:
       - DB_HOST=mssql
       - DB_PORT=1433
-      - DB_USER=9rg
+      - DB_USER=sa
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=mydb
     ports:
