@@ -7,6 +7,10 @@ services:
       - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
     ports:
       - "1433:1433"
+    volumes:
+      - ./tools/docker/init-scripts:/init-scripts
+    command:
+      - /bin/bash/ -c "sleep 30 && /opt/mssql/bin/sqlservr & /bin/bash /init-scripts/init.sql" 
     networks:
       - go-vue-init-learning_network
 
